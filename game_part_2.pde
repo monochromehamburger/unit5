@@ -13,9 +13,18 @@ float x, y, d;
 float x2, y2, d2;
 boolean a2Key, d2Key, w2Key, s2Key;
 float holex, holey, holed;
-int points=0;
+int points1=0;
+int points2=0;
+import processing.sound.*;
+SoundFile fail;
+SoundFile success;
+SoundFile music;
+boolean green=true;
 void setup(){
   size(1500, 1500, P2D);
+  fail = new SoundFile(this, "FAILURE.wav");
+  success = new SoundFile(this, "SUCCESS.wav");
+  music=new SoundFile(this, "MUSIC.mp3");
   ballx=width/2;
   bally=height/2;
   balld=50;
@@ -32,12 +41,16 @@ void setup(){
   holex=width/2;
   holey=100;
   holed=100;
+  music.loop();
+  music.amp(1);
 }
 void draw(){
   background(color1);
   strokeWeight(5);
   stroke(black);
   fill(255, 0, 0);
+  if(green)fill(0,255,0);
+  else fill(255,0,0);
   circle(ballx, bally, balld);
   ballx+=vx;
   bally+=vy; 
@@ -57,6 +70,7 @@ void draw(){
   stroke(0);
   fill(0);
   circle(holex, holey, holed);
+  circle(holex, height-holey, holed);
   stroke(255);
   strokeWeight(5);
   fill(color2);
@@ -72,23 +86,73 @@ void draw(){
   if(w2Key) y2-=10;
   if(s2Key) y2+=10;
   if(dist(x, y, ballx, bally) <=d/2+balld/2){
-    vx=(ballx-x)/5;
-    vy=(bally-y)/5;
+    if(green){
+      vx=(ballx-x)/8;
+      vy=(bally-y)/8;
+    }
+    else{
+      points2+=1;
+      ballx=width/2;
+      bally=height/2;
+      fail.play();
+    }
   }
   if(dist(x2, y2, ballx, bally) <=d2/2+balld/2){
-    vx=(ballx-x2)/5;
-    vy=(bally-y2)/5;
+    if(green){
+      vx=(ballx-x2)/8;
+      vy=(bally-y2)/8;
+    }
+    else{
+      points1+=1;
+      ballx=width/2;
+      bally=height/2;
+      fail.play();
+    }
   }
-  if(dist(holex, holey, ballx, bally) <=holed/2+balld/2){
-    points++;
-    ballx=width/2;
-    bally=height/2;
+  //if(dist(holex, holey, ballx, bally) <=holed/2+balld/2){
+  //  points2+=2;
+  //  ballx=width/2;
+  //  bally=height/2;
+  //  success.play();
+  //}
+  //if(dist(holex, height-holey, ballx, bally) <=holed/2+balld/2){
+  //  points1+=2;
+  //  ballx=width/2;
+  //  bally=height/2;
+  //  success.play();
+  //}
+  if(bally<=balld/2){
+    if(green){
+      points2++;
+      ballx=width/2;
+      bally=height/2;
+      success.play();
+    }
+  }
+  if(bally>=height-balld/2){
+    if(green){
+      points1++;
+      ballx=width/2;
+      bally=height/2;
+      success.play();
+    }
   }
   textSize(40);
   textAlign(CENTER, CENTER);
   fill(255, 0, 0);
-  text(points, x, y);
-  
+  text(points1, x, y);
+  text(points2, x2, y2);
+  if(random(0,1000)<1){
+    green=!green;
+    if(!green){
+      vy*=5;
+      vx*=5;
+    }
+    else{
+      vy/=5;
+      vx/=5;
+    }
+  }
 }
 void keyPressed(){
   if(key=='a'){
