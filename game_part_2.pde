@@ -69,13 +69,11 @@ void draw(){
   strokeWeight(5);
   stroke(0);
   fill(0);
-  circle(holex, holey, holed);
-  circle(holex, height-holey, holed);
   stroke(255);
   strokeWeight(5);
-  fill(color2);
+  fill(color4);
   circle(x, y, d);
-  fill(color3);
+  fill(color5);
   circle(x2, y2, d2);
   if(aKey) x-=10;
   if(dKey) x+=10;
@@ -142,16 +140,42 @@ void draw(){
   fill(255, 0, 0);
   text(points1, x, y);
   text(points2, x2, y2);
+  text("Pong (trust)", width/2, 100);
   if(random(0,1000)<1){
     green=!green;
     if(!green){
-      vy*=5;
-      vx*=5;
+      
+      vy*=random(4,8);
+      vx*=random(4,8);
     }
     else{
       vy/=5;
       vx/=5;
     }
+  }
+  if(x<d/2){
+    x=d/2;
+  }
+  if(y<d/2){
+    y=d/2;
+  }
+  if(x>width-d/2){
+    x=width-d/2;
+  }
+  if(y>height-d/2){
+    y=height-d/2;
+  }
+  if(x2<d/2){
+    x2=d/2;
+  }
+  if(y2<d/2){
+    y2=d/2;
+  }
+  if(x2>width-d/2){
+    x2=width-d/2;
+  }
+  if(y2>height-d/2){
+    y2=height-d/2;
   }
 }
 void keyPressed(){
