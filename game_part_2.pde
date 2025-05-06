@@ -16,11 +16,17 @@ float holex, holey, holed;
 int points1=0;
 int points2=0;
 import processing.sound.*;
+//mode framework
+int mode=0;
+final int INTRO =0;
+final int GAME = 1;
+final int PAUSE=2;
+final int GAMEOVER=3;
 SoundFile fail;
 SoundFile success;
 SoundFile music;
 boolean green=true;
-void setup(){
+void setup() {
   size(1500, 1500, P2D);
   fail = new SoundFile(this, "FAILURE.wav");
   success = new SoundFile(this, "SUCCESS.wav");
@@ -28,8 +34,8 @@ void setup(){
   ballx=width/2;
   bally=height/2;
   balld=50;
-  vx=random(0,10);
-  vy=random(0,10);
+  vx=random(0, 10);
+  vy=random(0, 10);
   //ax=random(0,2);
   //ay=random(0,2);
   x=width/2;
@@ -43,190 +49,200 @@ void setup(){
   holed=100;
   music.loop();
   music.amp(1);
+  mode=0;
 }
-void draw(){
-  background(color1);
-  strokeWeight(5);
-  stroke(black);
-  fill(255, 0, 0);
-  if(green)fill(0,255,0);
-  else fill(255,0,0);
-  circle(ballx, bally, balld);
-  ballx+=vx;
-  bally+=vy; 
-  vy+=ay;
-  vx+=ax;
-  if(bally<=balld/2) vy=-vy;
-  if(bally>=height-balld/2) vy=-vy;
-  if(ballx<=balld/2){
-    vx=-vx;
-    ballx=balld/2;
-  }
-  if(ballx>=width-balld/2){
-    vx=-vx;
-    ballx=width-balld/2;
-  }
-  strokeWeight(5);
-  stroke(0);
-  fill(0);
-  stroke(255);
-  strokeWeight(5);
-  fill(color4);
-  circle(x, y, d);
-  fill(color5);
-  circle(x2, y2, d2);
-  if(aKey) x-=10;
-  if(dKey) x+=10;
-  if(wKey) y-=10;
-  if(sKey) y+=10;
-  if(a2Key) x2-=10;
-  if(d2Key) x2+=10;
-  if(w2Key) y2-=10;
-  if(s2Key) y2+=10;
-  if(dist(x, y, ballx, bally) <=d/2+balld/2){
-    if(green){
-      vx=(ballx-x)/8;
-      vy=(bally-y)/8;
+void draw() {
+  if (mode==INTRO) {
+    intro();
+  } else if (mode==GAMEOVER) {
+    gameOver();
+  } else {
+
+
+    background(color1);
+    strokeWeight(5);
+    stroke(black);
+    fill(255, 0, 0);
+    if (green)fill(0, 255, 0);
+    else fill(255, 0, 0);
+    circle(ballx, bally, balld);
+    ballx+=vx;
+    bally+=vy;  
+    vy+=ay;
+    vx+=ax;
+    if (bally<=balld/2) vy=-vy;
+    if (bally>=height-balld/2) vy=-vy;
+    if (ballx<=balld/2) {
+      vx=-vx;
+      ballx=balld/2;
     }
-    else{
-      points2+=1;
-      ballx=width/2;
-      bally=height/2;
-      fail.play();
+    if (ballx>=width-balld/2) {
+      vx=-vx;
+      ballx=width-balld/2;
     }
-  }
-  if(dist(x2, y2, ballx, bally) <=d2/2+balld/2){
-    if(green){
-      vx=(ballx-x2)/8;
-      vy=(bally-y2)/8;
+    strokeWeight(5);
+    stroke(0);
+    fill(0);
+    stroke(255);
+    strokeWeight(5);
+    fill(color4);
+    circle(x, y, d);
+    fill(color5);
+    circle(x2, y2, d2);
+    if (aKey) x-=10;
+    if (dKey) x+=10;
+    if (wKey) y-=10;
+    if (sKey) y+=10;
+    if (a2Key) x2-=10;
+    if (d2Key) x2+=10;
+    if (w2Key) y2-=10;
+    if (s2Key) y2+=10;
+    if (dist(x, y, ballx, bally) <=d/2+balld/2) {
+      if (green) {
+        vx=(ballx-x)/8;
+        vy=(bally-y)/8;
+      } else {
+        points2+=1;
+        ballx=width/2;
+        bally=height/2;
+        fail.play();
+      }
     }
-    else{
-      points1+=1;
-      ballx=width/2;
-      bally=height/2;
-      fail.play();
+    if (dist(x2, y2, ballx, bally) <=d2/2+balld/2) {
+      if (green) {
+        vx=(ballx-x2)/8;
+        vy=(bally-y2)/8;
+      } else {
+        points1+=1;
+        ballx=width/2;
+        bally=height/2;
+        fail.play();
+      }
     }
-  }
-  //if(dist(holex, holey, ballx, bally) <=holed/2+balld/2){
-  //  points2+=2;
-  //  ballx=width/2;
-  //  bally=height/2;
-  //  success.play();
-  //}
-  //if(dist(holex, height-holey, ballx, bally) <=holed/2+balld/2){
-  //  points1+=2;
-  //  ballx=width/2;
-  //  bally=height/2;
-  //  success.play();
-  //}
-  if(bally<=balld/2){
-    if(green){
-      points2++;
-      ballx=width/2;
-      bally=height/2;
-      success.play();
+    //if(dist(holex, holey, ballx, bally) <=holed/2+balld/2){
+    //  points2+=2;
+    //  ballx=width/2;
+    //  bally=height/2;
+    //  success.play();
+    //}
+    //if(dist(holex, height-holey, ballx, bally) <=holed/2+balld/2){
+    //  points1+=2;
+    //  ballx=width/2;
+    //  bally=height/2;
+    //  success.play();
+    //}
+    if (bally<=balld/2) {
+      if (green) {
+        points2++;
+        ballx=width/2;
+        bally=height/2;
+        success.play();
+      }
     }
-  }
-  if(bally>=height-balld/2){
-    if(green){
-      points1++;
-      ballx=width/2;
-      bally=height/2;
-      success.play();
+    if (bally>=height-balld/2) {
+      if (green) {
+        points1++;
+        ballx=width/2;
+        bally=height/2;
+        success.play();
+      }
     }
-  }
-  textSize(40);
-  textAlign(CENTER, CENTER);
-  fill(255, 0, 0);
-  text(points1, x, y);
-  text(points2, x2, y2);
-  text("Pong (trust)", width/2, 100);
-  if(random(0,1000)<1){
-    green=!green;
-    if(!green){
-      
-      vy*=random(4,8);
-      vx*=random(4,8);
+
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    fill(255, 0, 0);
+    text(points1, x, y);
+    text(points2, x2, y2);
+    text("Pong (trust)", width/2, 100);
+    if (random(0, 1000)<1) {
+      green=!green;
+      if (!green) {
+
+        vy*=random(4, 8);
+        vx*=random(4, 8);
+      } else {
+        vy/=5;
+        vx/=5;
+      }
     }
-    else{
-      vy/=5;
-      vx/=5;
+    if (x<d/2) {
+      x=d/2;
     }
-  }
-  if(x<d/2){
-    x=d/2;
-  }
-  if(y<d/2){
-    y=d/2;
-  }
-  if(x>width-d/2){
-    x=width-d/2;
-  }
-  if(y>height-d/2){
-    y=height-d/2;
-  }
-  if(x2<d/2){
-    x2=d/2;
-  }
-  if(y2<d/2){
-    y2=d/2;
-  }
-  if(x2>width-d/2){
-    x2=width-d/2;
-  }
-  if(y2>height-d/2){
-    y2=height-d/2;
+    if (y<d/2) {
+      y=d/2;
+    }
+    if (x>width-d/2) {
+      x=width-d/2;
+    }
+    if (y>height-d/2) {
+      y=height-d/2;
+    }
+    if (x2<d/2) {
+      x2=d/2;
+    }
+    if (y2<d/2) {
+      y2=d/2;
+    }
+    if (x2>width-d/2) {
+      x2=width-d/2;
+    }
+    if (y2>height-d/2) {
+      y2=height-d/2;
+    }
   }
 }
-void keyPressed(){
-  if(key=='a'){
+void keyPressed() {
+  if (key=='a') {
     aKey=true;
   }
-  if(key=='d'){
+  if (key=='d') {
     dKey=true;
   }
-  if(key=='w'){
+  if (key=='w') {
     wKey=true;
   }
-  if(key=='s'){
+  if (key=='s') {
     sKey=true;
   }
-  if(keyCode==LEFT){
+  if (keyCode==LEFT) {
     a2Key=true;
   }
-  if(keyCode==RIGHT){
+  if (keyCode==RIGHT) {
     d2Key=true;
   }
-  if(keyCode==UP){
+  if (keyCode==UP) {
     w2Key=true;
   }
-  if(keyCode==DOWN){
+  if (keyCode==DOWN) {
     s2Key=true;
   }
 }
-void keyReleased(){
-  if(key=='a'){
+void keyReleased() {
+  if (key=='a') {
     aKey=false;
   }
-  if(key=='d'){
+  if (key=='d') {
     dKey=false;
   }
-  if(key=='w'){
+  if (key=='w') {
     wKey=false;
   }
-  if(key=='s'){
+  if (key=='s') {
     sKey=false;
   }
-  if(keyCode==LEFT){
+  if (keyCode==LEFT) {
     a2Key=false;
   }
-  if(keyCode==RIGHT){
+  if (keyCode==RIGHT) {
     d2Key=false;
   }
-  if(keyCode==UP){
+  if (keyCode==UP) {
     w2Key=false;
   }
-  if(keyCode==DOWN){
+  if (keyCode==DOWN) {
     s2Key=false;
+  }
+  if(key=='1'){
+    mode=1;
   }
 }
