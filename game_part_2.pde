@@ -21,7 +21,8 @@ int mode=0;
 final int INTRO =0;
 final int GAME = 1;
 final int PAUSE=2;
-final int GAMEOVER=3;
+final int GAMEOVER1=3;
+final int GAMEOVER2=3;
 SoundFile fail;
 SoundFile success;
 SoundFile music;
@@ -52,10 +53,16 @@ void setup() {
   mode=0;
 }
 void draw() {
+  if(points1==10){
+    mode=3;
+  }
+    
   if (mode==INTRO) {
     intro();
-  } else if (mode==GAMEOVER) {
+  } else if (mode==GAMEOVER1) {
     gameOver();
+  } else if(mode==GAMEOVER2){
+    gameOver2();
   } else {
 
 
