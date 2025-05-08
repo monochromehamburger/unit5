@@ -22,7 +22,7 @@ final int INTRO =0;
 final int GAME = 1;
 final int PAUSE=2;
 final int GAMEOVER1=3;
-final int GAMEOVER2=3;
+final int GAMEOVER2=4;
 SoundFile fail;
 SoundFile success;
 SoundFile music;
@@ -55,6 +55,9 @@ void setup() {
 void draw() {
   if(points1==10){
     mode=3;
+  }
+  if(points2==10){
+    mode=4;
   }
     
   if (mode==INTRO) {
@@ -113,6 +116,8 @@ void draw() {
         ballx=width/2;
         bally=height/2;
         fail.play();
+        vx=random(40,80);
+        vy=random(40,80);
       }
     }
     if (dist(x2, y2, ballx, bally) <=d2/2+balld/2) {
@@ -124,7 +129,13 @@ void draw() {
         ballx=width/2;
         bally=height/2;
         fail.play();
+        vx=random(40,80);
+        vy=random(40,80);
       }
+    }
+    if(!green && random(0,250)<1){
+      vx=random(40,80);
+      vy=random(40,80);
     }
     //if(dist(holex, holey, ballx, bally) <=holed/2+balld/2){
     //  points2+=2;
@@ -144,6 +155,8 @@ void draw() {
         ballx=width/2;
         bally=height/2;
         success.play();
+        vx=0;
+        vy=0;
       }
     }
     if (bally>=height-balld/2) {
@@ -152,6 +165,8 @@ void draw() {
         ballx=width/2;
         bally=height/2;
         success.play();
+        vx=0;
+        vy=0;
       }
     }
 
@@ -161,22 +176,24 @@ void draw() {
     text(points1, x, y);
     text(points2, x2, y2);
     text("Pong (trust)", width/2, 100);
-    if (random(0, 1000)<1) {
+    if (random(0, 500)<1) {
       green=!green;
       if (!green) {
 
         vy*=random(4, 8);
         vx*=random(4, 8);
       } else {
-        vy/=5;
-        vx/=5;
+        vy=0;
+        vx=0;
+        ballx=width/2;
+        bally=height/2;
       }
     }
     if (x<d/2) {
       x=d/2;
-    }
+    }  
     if (y<d/2) {
-      y=d/2;
+      y=d/2; 
     }
     if (x>width-d/2) {
       x=width-d/2;
