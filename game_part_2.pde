@@ -27,6 +27,8 @@ SoundFile fail;
 SoundFile success;
 SoundFile music;
 boolean green=true;
+boolean orange=false;
+color orangeColor=#FF9203;
 void setup() {
   size(1500, 1500, P2D);
   fail = new SoundFile(this, "FAILURE.wav");
@@ -45,12 +47,13 @@ void setup() {
   y2=height/2+200;
   d=100;
   d2=100;
-  holex=width/2;
+  holex=width/2;  
   holey=100;
   holed=100;
   music.loop();
   music.amp(1);
   mode=0;
+  orange=false;
 }
 void draw() {
   if(points1==10){
@@ -69,7 +72,12 @@ void draw() {
   } else {
 
 
-    background(color1);
+    if(orange==false){
+      background(color1);
+    }
+    else{
+      background(orangeColor);
+    }
     strokeWeight(5);
     stroke(black);
     fill(255, 0, 0);
@@ -188,7 +196,10 @@ void draw() {
         ballx=width/2;
         bally=height/2;
       }
-    }
+    }   
+    if (random(0, 1000)<1) {
+      orange=!orange;
+    }  
     if (x<d/2) {
       x=d/2;
     }  
@@ -216,55 +227,111 @@ void draw() {
   }
 }
 void keyPressed() {
-  if (key=='a') {
+  if(orange){
+    if (key=='d') {
+      aKey=true;
+    }
+    if (key=='a') {
+      dKey=true;
+    }
+    if (key=='s') {
+      wKey=true;
+    }
+    if (key=='w') {
+      sKey=true;
+    }
+    if (keyCode==RIGHT) {
+      a2Key=true;
+    }
+    if (keyCode==LEFT) {
+      d2Key=true;
+    }
+    if (keyCode==DOWN) {
+      w2Key=true;
+    }
+    if (keyCode==UP) {
+      s2Key=true;
+    }
+  }
+  else{
+    if (key=='a') {
     aKey=true;
-  }
-  if (key=='d') {
-    dKey=true;
-  }
-  if (key=='w') {
-    wKey=true;
-  }
-  if (key=='s') {
-    sKey=true;
-  }
-  if (keyCode==LEFT) {
-    a2Key=true;
-  }
-  if (keyCode==RIGHT) {
-    d2Key=true;
-  }
-  if (keyCode==UP) {
-    w2Key=true;
-  }
-  if (keyCode==DOWN) {
-    s2Key=true;
+    }
+    if (key=='d') {
+      dKey=true;
+    }
+    if (key=='w') {
+      wKey=true;
+    }
+    if (key=='s') {
+      sKey=true;
+    }
+    if (keyCode==LEFT) {
+      a2Key=true;
+    }
+    if (keyCode==RIGHT) {
+      d2Key=true;
+    }
+    if (keyCode==UP) {
+      w2Key=true;
+    }
+    if (keyCode==DOWN) {
+      s2Key=true;
+    }
   }
 }
 void keyReleased() {
-  if (key=='a') {
-    aKey=false;
+  if(orange){
+    if (key=='d') {
+      aKey=false;
+    }
+    if (key=='a') {
+      dKey=false;
+    }
+    if (key=='s') {
+      wKey=false;
+    }
+    if (key=='w') {
+      sKey=false;
+    }
+    if (keyCode==RIGHT) {
+      a2Key=false;
+    }
+    if (keyCode==LEFT) {
+      d2Key=false;
+    }
+    if (keyCode==DOWN) {
+      w2Key=false;
+    }
+    if (keyCode==UP) {
+      s2Key=false;
+    }
   }
-  if (key=='d') {
-    dKey=false;
-  }
-  if (key=='w') {
-    wKey=false;
-  }
-  if (key=='s') {
-    sKey=false;
-  }
-  if (keyCode==LEFT) {
-    a2Key=false;
-  }
-  if (keyCode==RIGHT) {
-    d2Key=false;
-  }
-  if (keyCode==UP) {
-    w2Key=false;
-  }
-  if (keyCode==DOWN) {
-    s2Key=false;
+  else{
+    if (key=='a') {
+      aKey=false;
+    }
+    if (key=='d') {
+      dKey=false;
+    }
+    if (key=='w') {
+      wKey=false;
+    }
+    if (key=='s') {
+      sKey=false;
+    }
+    if (keyCode==LEFT) {
+      a2Key=false;
+    }
+    if (keyCode==RIGHT) {
+      d2Key=false;
+    }
+    if (keyCode==UP) {
+      w2Key=false;
+    }
+    if (keyCode==DOWN) {
+      s2Key=false;
+    }
   }
   if(key=='1'){
     mode=1;
