@@ -4,4 +4,5 @@ void gameOver(){
   textSize(100);
   text("Player 1 wins!!!!!!!!!!!!!!!", height/2, width/2-50);
   text("!!!!!!!!!!!!!1", height/2+100, width/2-200);
+  text("Press 1 two restart", height/2+200, width/2-200);
 }

@@ -126,6 +126,7 @@ void draw() {
         fail.play();
         vx=random(40,80);
         vy=random(40,80);
+        d2-=6;
       }
     }
     if (dist(x2, y2, ballx, bally) <=d2/2+balld/2) {
@@ -139,6 +140,7 @@ void draw() {
         fail.play();
         vx=random(40,80);
         vy=random(40,80);
+        d-=6;
       }
     }
     if(!green && random(0,250)<1){
@@ -160,6 +162,7 @@ void draw() {
     if (bally<=balld/2) {
       if (green) {
         points2++;
+        d2-=6;
         ballx=width/2;
         bally=height/2;
         success.play();
@@ -170,6 +173,7 @@ void draw() {
     if (bally>=height-balld/2) {
       if (green) {
         points1++;
+        d-=6;
         ballx=width/2;
         bally=height/2;
         success.play();
@@ -183,7 +187,7 @@ void draw() {
     fill(255, 0, 0);
     text(points1, x, y);
     text(points2, x2, y2);
-    text("Pong (trust)", width/2, 100);
+    text("Pong (trust it's totally balanced)", width/2-100, 100);
     if (random(0, 500)<1) {
       green=!green;
       if (!green) {
@@ -335,5 +339,11 @@ void keyReleased() {
   }
   if(key=='1'){
     mode=1;
+    points1=0;
+    points2=0;
+    d=100;
+    d2=100;
+    orange=false;
+    background(color1);
   }
 }
