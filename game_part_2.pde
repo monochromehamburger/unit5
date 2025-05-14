@@ -200,9 +200,17 @@ void draw() {
         ballx=width/2;
         bally=height/2;
       }
-    }   
+    }
     if (random(0, 1000)<1) {
       orange=!orange;
+      aKey=false;
+      sKey=false;
+      wKey=false;
+      dKey=false;
+      a2Key=false;
+      s2Key=false;
+      w2Key=false;
+      d2Key=false;
     }  
     if (x<d/2) {
       x=d/2;
@@ -345,5 +353,11 @@ void keyReleased() {
     d2=100;
     orange=false;
     background(color1);
+    ballx=width/2;
+    bally=height/2;
+    x=width/2;
+    y=height/2-200;
+    x2=width/2;
+    y2=height/2+200;
   }
 }

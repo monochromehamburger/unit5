@@ -5,5 +5,4 @@ void gameOver2(){
   text("player 2 wins jaiosdrawehrkjaherkjca", height/2, width/2-50);
   text("!!!!!!!!!!!!!!!!!!!!!!!!!11", height/2+100, width/2-200);
   text("Press 1 two restart", height/2+200, width/2-200);
-
 }  
