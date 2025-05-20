@@ -8,4 +8,14 @@ void intro(){
     fill(23, 229, 203);  
     square(width/2+i*200-450, height/2-50, 100);
   }
+  paddleX=width/2;
+  paddleY=height;
+  paddleD=200;
+  size(1500, 1500, P2D);
+  ballx=width/2;
+  bally=height/2;
+  balld=50;
+  vy=-5;
+  vx=5;
+  levelEnd=true;
 }
