@@ -13,9 +13,9 @@ void intro(){
   paddleD=200;
   size(1500, 1500, P2D);
   ballx=width/2;
-  bally=height/2;
+  bally=height/2+200;
   balld=50;
-  vy=-5;
-  vx=5;
+  vy=5;
+  vx=random(-5, 5);
   levelEnd=true;
 }
