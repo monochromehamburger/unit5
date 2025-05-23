@@ -1,6 +1,7 @@
 void lose(){
   background(0,255,0);
   fill(0);
+  vy=0;
   textSize(100);
   textAlign(CENTER);
   text("You lost LLLLLLLLLLLLL", width/2, height/2-200);

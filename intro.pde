@@ -1,6 +1,8 @@
 void intro(){
   background(0,255,0);
-  fill(0);
+  image(gif[frame/5], 0, 0, width, height);
+  
+  fill(72, 173, 117);
   textSize(100);
   textAlign(CENTER);
   text("BREAK OUT", width/2, height/2-200);

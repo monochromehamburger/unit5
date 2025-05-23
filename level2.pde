@@ -1,6 +1,8 @@
 
-void game(){
+void level2(){
   background(93,13,89);
+  speed=30;
+  
   fill(0);
   textSize(250);
   textAlign(CENTER);
@@ -20,8 +22,8 @@ void game(){
   while(i<n){
     if(alive[i]==true){
       if(dist(ballx, bally, x[i], y[i])<balld/2+brickd/2){
-        vx=(ballx-x[i])/5;
-        vy=(bally-y[i])/5;
+        vx=(ballx-x[i])/3.5;
+        vy=(bally-y[i])/3.5;
         alive[i]=false;
         bricksLeft--;
       }
@@ -30,5 +32,5 @@ void game(){
   }
   textSize(50);
   fill(255);
-  text("Level 1: Completely Normal", 400, height-100);
+  text("Level 2: Gotta go fast", 400, height-100);
  }

@@ -1,6 +1,7 @@
 
 import processing.sound.*;
 int mode=0;
+int frame=0;
 boolean levelEnd=true;
 int paddleX, paddleY, paddleD;
 boolean aKey, dKey, wKey, sKey;
@@ -14,7 +15,13 @@ int[] brickColor;
 boolean[] alive;
 int n;
 int lives=3;
+PImage[] gif;
+int numOfFrames;
+PFont font;
+int speed;
+int currentLevel=1;
 void setup(){
+  speed=15;
   n=120;
   bricksLeft=n;
   paddleX=width/2;
@@ -30,31 +37,60 @@ void setup(){
   y=new int[n];
   brickColor=new int[n];
   alive=new boolean[n];
+  numOfFrames=74;
+  gif=new PImage[numOfFrames];
+  font = createFont("Comic Sans MS Italic", 128);
+  textFont(font);
+  for(int i=0;i<numOfFrames;i++){
+    gif[i]=loadImage("frame_"+i+"_delay-0.1s.gif");
+  }
   start();
 }
 void start(){
   int x1=50;
   int y1=100;
-  for(int i=0;i<n;i++){
-    if(random(4)<3){
-      alive[i]=true;
-    }
-    else{
-      bricksLeft--;
-    }
-    brickColor[i]=((x1+y1)/10);
-    x[i]=x1;
-    y[i]=y1;
-    x1+=100;
-    if(x1>=1500){
-      x1=50;
-      y1+=100;
+  if(currentLevel==1){
+    for(int i=0;i<n;i++){
+      if(random(2)<1){
+        alive[i]=true;
+      }
+      else{
+        bricksLeft--;
+      }
+      brickColor[i]=((x1+y1)/10);
+      x[i]=x1;
+      y[i]=y1;
+      x1+=100;
+      if(x1>=1500){
+        x1=50;
+        y1+=100;
+      }
     }
   }
+  else{
+    for(int i=0;i<n;i++){
+      if(random(4)<1){
+        alive[i]=true;
+      }
+      else{
+        bricksLeft--;
+      }
+      brickColor[i]=((x1+y1)/10);
+      x[i]=x1;
+      y[i]=y1;
+      x1+=100;
+      if(x1>=1500){
+        x1=50;
+        y1+=100;
+      }
+    }
+  }
+  
 }
 void draw(){
-  if (aKey) paddleX-=15;
-  if (dKey) paddleX+=15;
+  
+  if (aKey) paddleX-=speed;
+  if (dKey) paddleX+=speed;
   //if (wKey) paddleY-=10;
   //if (sKey) paddleY+=10;
   if(mode==0){
@@ -71,6 +107,9 @@ void draw(){
   }
   else if(mode==2){
     win();
+  }
+  else if(mode==3){
+    level2();
   }
   if (paddleX<paddleD/2) {
     paddleX=paddleD/2;
@@ -89,6 +128,10 @@ void draw(){
   if (dist(paddleX, paddleY, ballx, bally) <=paddleD/2+balld/2) {
       vx=(ballx-paddleX)/5;
       vy=(bally-paddleY)/5;
+      if(mode==3){
+        vx=(ballx-paddleX)/3.5;
+        vy=(bally-paddleY)/3.5;
+      }
   }
   if (bally<=balld/2) vy=-vy;
   if (bally>=height-balld/2){
@@ -109,17 +152,40 @@ void draw(){
     ballx=width-balld/2;
   }
   if(bricksLeft==0){
-    mode=2;
+    mode++;
+    currentLevel=3;
+    lives=3;
     levelEnd=true;
   }
   if(abs(vy)<=0.5){
     vy+=0.5;
   }
+  frame++;
+  if(frame==numOfFrames*5){
+    frame=0;
+  }
+  if(bally<0){
+    bally=0;
+  }
 }
 void mouseClicked(){
-  if(levelEnd==true){
-    mode++;
-    levelEnd=false;
+  //if(levelEnd==true){
+   mode=currentLevel;
+   vy=5;
+   if(lives==0){
+     lives=3;
+   }
+  //  levelEnd=false;
+  //}
+  if(mode==3 && lives==3){
+    for(int i=0;i<n;i++){
+      x=new int[n];
+      y=new int[n];
+      alive=new boolean[n];
+      start();
+    }
+    ballx=width/2;
+    bally=height/2+300;
   }
 }
 
@@ -149,5 +215,9 @@ void keyReleased(){
   }
   if (key=='s') {
     sKey=false;
+  }
+  if (key=='q'){
+    currentLevel+=2;
+    lives=3;
   }
 }
