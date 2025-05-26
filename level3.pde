@@ -1,5 +1,5 @@
 
-void level2(){
+void level3(){
   background(93,13,89);
   speed=30;
   
@@ -22,8 +22,8 @@ void level2(){
   while(i<n){
     if(alive[i]==true){
       if(dist(ballx, bally, x[i], y[i])<balld/2+brickd/2){ 
-        vx=(ballx-x[i])/3;
-        vy=(bally-y[i])/3;
+        vx=(ballx-x[i])/random(0.5,6);
+        vy=(bally-y[i])/random(0.5,6);
         alive[i]=false;
         bricksLeft--;
       }
@@ -32,5 +32,5 @@ void level2(){
   }
   textSize(50);
   fill(255);
-  text("Level 2: Gotta go fast", 400, height-100);
+  text("Level 3: gambling", 400, height-100);
  }

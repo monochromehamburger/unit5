@@ -49,6 +49,7 @@ void setup(){
 void start(){
   int x1=50;
   int y1=100;
+  bricksLeft=n;
   if(currentLevel==1){
     for(int i=0;i<n;i++){
       if(random(2)<1){
@@ -111,6 +112,9 @@ void draw(){
   else if(mode==3){
     level2();
   }
+  else if(mode==5){
+    level3();
+  }
   if (paddleX<paddleD/2) {
     paddleX=paddleD/2;
   }  
@@ -129,17 +133,24 @@ void draw(){
       vx=(ballx-paddleX)/5;
       vy=(bally-paddleY)/5;
       if(mode==3){
-        vx=(ballx-paddleX)/3.5;
-        vy=(bally-paddleY)/3.5;
+        vx=(ballx-paddleX)/3;
+        vy=(bally-paddleY)/3;
+      }
+      if(mode==5){
+        vx=(ballx-paddleX)/random(0.5,6);
+        vy=(bally-paddleY)/random(0.5,6);
       }
   }
-  if (bally<=balld/2) vy=-vy;
+  if (bally<=balld/2){
+    bally=balld/2;
+    vy=-vy;
+  }
   if (bally>=height-balld/2){
     mode=-1;
     lives--;
     ballx=width/2;
     bally=height/2+200;
-    vx=0;
+    vx=0; 
     vy=0;
     levelEnd=true;
   }
@@ -152,10 +163,12 @@ void draw(){
     ballx=width-balld/2;
   }
   if(bricksLeft==0){
-    mode++;
-    currentLevel=3;
+    mode=2;
+    currentLevel+=2;
+    bricksLeft=1;
     lives=3;
     levelEnd=true;
+    println(currentLevel);
   }
   if(abs(vy)<=0.5){
     vy+=0.5;
@@ -177,7 +190,7 @@ void mouseClicked(){
    }
   //  levelEnd=false;
   //}
-  if(mode==3 && lives==3){
+  if(mode%2==1 && lives==3){
     for(int i=0;i<n;i++){
       x=new int[n];
       y=new int[n];
@@ -217,7 +230,6 @@ void keyReleased(){
     sKey=false;
   }
   if (key=='q'){
-    currentLevel+=2;
-    lives=3;
+    bricksLeft=0;
   }
 }
