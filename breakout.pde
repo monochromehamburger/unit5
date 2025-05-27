@@ -1,4 +1,3 @@
-
 import processing.sound.*;
 int mode=0;
 int frame=0;
@@ -20,7 +19,22 @@ int numOfFrames;
 PFont font;
 int speed;
 int currentLevel=1;
+import processing.sound.*;
+SoundFile intro;
+SoundFile fail;
+SoundFile success;
+SoundFile music;
+color common=#FFFFFF;
+color uncommon=#10FF00;
+color rare=#416EE5;
+color epic=#8707D8;
+color mythic=#DB0214;
+color legendary=#FAF43D;
+color currentColor=common;
 void setup(){
+  fail = new SoundFile(this, "FAILURE.wav");
+  success = new SoundFile(this, "SUCCESS.wav");
+  music=new SoundFile(this, "MUSIC.mp3");
   speed=15;
   n=120;
   bricksLeft=n;
@@ -45,6 +59,8 @@ void setup(){
     gif[i]=loadImage("frame_"+i+"_delay-0.1s.gif");
   }
   start();
+  music.loop();
+  music.amp(1);
 }
 void start(){
   int x1=50;
@@ -153,6 +169,7 @@ void draw(){
     vx=0; 
     vy=0;
     levelEnd=true;
+    fail.play();
   }
   if (ballx<=balld/2) {
     vx=-vx;
@@ -169,6 +186,7 @@ void draw(){
     lives=3;
     levelEnd=true;
     println(currentLevel);
+    success.play();
   }
   if(abs(vy)<=0.5){
     vy+=0.5;

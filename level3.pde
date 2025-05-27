@@ -1,6 +1,27 @@
 
 void level3(){
-  background(93,13,89);
+  if(random(100)<1){
+    float number=random(100);
+    if(number<50){
+      currentColor=common;
+    }
+    else if(number<75){
+      currentColor=uncommon;
+    }
+    else if(number<89){
+      currentColor=rare;
+    }
+    else if(number<96){
+      currentColor=epic;
+    }
+    else if(number<99){
+      currentColor=mythic;
+    }
+    else{
+      currentColor=legendary;
+    }
+  }
+  background(currentColor);
   speed=30;
   
   fill(0);
@@ -31,6 +52,12 @@ void level3(){
     i++;
   }
   textSize(50);
-  fill(255);
-  text("Level 3: gambling", 400, height-100);
+  fill(82, 82, 82);
+  text("Level 3: gambling", 300, height-100);
+  text("Common: 50%", 300, height-200);
+  text("Uncommon: 25%", 300, height-300);
+  text("Rare: 14%", 300, height-400);
+  text("Epic: 7%", 300, height-500);
+  text("Mythic: 4%", 300, height-600);
+  text("Legendary: 1%", 300, height-700);
  }
