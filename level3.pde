@@ -60,4 +60,5 @@ void level3(){
   text("Epic: 7%", 300, height-500);
   text("Mythic: 4%", 300, height-600);
   text("Legendary: 1%", 300, height-700);
+  text("1% chance to gamble every frame", 400, height-800);
  }
