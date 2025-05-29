@@ -6,6 +6,8 @@ int paddleX, paddleY, paddleD;
 boolean aKey, dKey, wKey, sKey;
 int ballx, bally, balld;
 float vx, vy;  
+int ballx2, bally2, balld2;
+float vx2, vy2;  
 int brickd=100;
 int bricksLeft;
 int[] x;
@@ -45,8 +47,13 @@ void setup(){
   ballx=width/2;
   bally=height/2+300;
   balld=50;
+  ballx2=width/2;
+  bally2=height/2+300;
+  balld2=50;
   vy=-5;
   vx=random(-5,5);
+  vy2=-5;
+  vx2=random(-5,5);
   x=new int[n];
   y=new int[n];
   brickColor=new int[n];
@@ -65,8 +72,28 @@ void setup(){
 void start(){
   int x1=50;
   int y1=100;
+  ballx2=width/2+100;
+  bally2=height/2+300;
   bricksLeft=n;
   if(currentLevel==1){
+    for(int i=0;i<n;i++){
+      if(random(2)<1){
+        alive[i]=true;
+      }
+      else{
+        bricksLeft--;
+      }
+      brickColor[i]=((x1+y1)/10);
+      x[i]=x1;
+      y[i]=y1;
+      x1+=100;
+      if(x1>=1500){
+        x1=50;
+        y1+=100;
+      }
+    }
+  }
+  else if(currentLevel==7){
     for(int i=0;i<n;i++){
       if(random(2)<1){
         alive[i]=true;
@@ -105,7 +132,7 @@ void start(){
   
 }
 void draw(){
-  
+  println(mode);
   if (aKey) paddleX-=speed;
   if (dKey) paddleX+=speed;
   //if (wKey) paddleY-=10;
@@ -131,6 +158,9 @@ void draw(){
   else if(mode==5){
     level3();
   }
+  else if(mode==7){
+    level4();
+  }
   if (paddleX<paddleD/2) {
     paddleX=paddleD/2;
   }  
@@ -145,6 +175,8 @@ void draw(){
   //}
   ballx+=vx;
   bally+=vy;
+  ballx2+=vx2;
+  bally2+=vy2;
   if (dist(paddleX, paddleY, ballx, bally) <=paddleD/2+balld/2) {
       vx=(ballx-paddleX)/5;
       vy=(bally-paddleY)/5;
@@ -156,16 +188,47 @@ void draw(){
         vx=(ballx-paddleX)/random(0.5,6);
         vy=(bally-paddleY)/random(0.5,6);
       }
+      if(mode==7){
+        vx=(ballx-paddleX)/5;
+        vy=(bally-paddleY)/5;
+      }
+  }
+  if (dist(paddleX, paddleY, ballx2, bally2) <=paddleD/2+balld2/2) {
+      vx2=(ballx2-paddleX)/5;
+      vy2=(bally2-paddleY)/5;
+      
   }
   if (bally<=balld/2){
     bally=balld/2;
     vy=-vy;
+  }
+  if (bally2<=balld2/2){
+    bally2=balld2/2;
+    vy2=-vy2;
   }
   if (bally>=height-balld/2){
     mode=-1;
     lives--;
     ballx=width/2;
     bally=height/2+200;
+    ballx2=width/2;
+    bally2=height/2+200;
+    vx=0; 
+    vy=0;
+    vx2=0; 
+    vy2=0;
+    levelEnd=true;
+    fail.play();
+  }
+  if (currentLevel==7 && bally2>=height-balld2/2){
+    mode=-1;
+    lives--;
+    ballx2=width/2;
+    bally2=height/2+200;
+    ballx=width/2;
+    bally=height/2+200;
+    vx2=0; 
+    vy2=0;
     vx=0; 
     vy=0;
     levelEnd=true;
@@ -179,17 +242,27 @@ void draw(){
     vx=-vx;
     ballx=width-balld/2;
   }
+  if (ballx2<=balld2/2) {
+    vx2=-vx2;
+    ballx2=balld2/2;
+  }
+  if (ballx2>=width-balld2/2) {
+    vx2=-vx2;
+    ballx2=width-balld2/2;
+  }
   if(bricksLeft==0){
     mode=2;
     currentLevel+=2;
     bricksLeft=1;
     lives=3;
     levelEnd=true;
-    println(currentLevel);
     success.play();
   }
   if(abs(vy)<=0.5){
     vy+=0.5;
+  }
+  if(abs(vy2)<=0.5){
+    vy2+=0.5;
   }
   frame++;
   if(frame==numOfFrames*5){
@@ -203,6 +276,9 @@ void mouseClicked(){
   //if(levelEnd==true){
    mode=currentLevel;
    vy=5;
+   vy2=5;
+   ballx2=width/2-100;
+   ballx=width/2;
    if(lives==0){
      lives=3;
    }
