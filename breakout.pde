@@ -51,9 +51,7 @@ void setup(){
   bally2=height/2+300;
   balld2=50;
   vy=-5;
-  vx=random(-5,5);
   vy2=-5;
-  vx2=random(-5,5);
   x=new int[n];
   y=new int[n];
   brickColor=new int[n];
@@ -161,6 +159,9 @@ void draw(){
   else if(mode==7){
     level4();
   }
+  else if(mode==-2){
+    pause();
+  }
   if (paddleX<paddleD/2) {
     paddleX=paddleD/2;
   }  
@@ -173,10 +174,12 @@ void draw(){
   //if (paddleY>height-paddleD/2) {
   //  paddleY=height-paddleD/2;
   //}
-  ballx+=vx;
-  bally+=vy;
-  ballx2+=vx2;
-  bally2+=vy2;
+  if(mode!=-2){
+    ballx+=vx;
+    bally+=vy;
+    ballx2+=vx2;
+    bally2+=vy2;
+  }
   if (dist(paddleX, paddleY, ballx, bally) <=paddleD/2+balld/2) {
       vx=(ballx-paddleX)/5;
       vy=(bally-paddleY)/5;
@@ -325,5 +328,11 @@ void keyReleased(){
   }
   if (key=='q'){
     bricksLeft=0;
+  }
+  if(key=='p'){
+    mode=-2;
+  }
+  if(key=='o'){
+    mode=currentLevel;
   }
 }
