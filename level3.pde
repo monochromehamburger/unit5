@@ -12,7 +12,7 @@ void level3(){
       currentColor=rare;
     }
     else if(number<96){
-      currentColor=epic;
+      currentColor=epic;  
     }
     else if(number<99){
       currentColor=mythic;

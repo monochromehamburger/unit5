@@ -31,7 +31,7 @@ color uncommon=#10FF00;
 color rare=#416EE5;
 color epic=#8707D8;
 color mythic=#DB0214;
-color legendary=#FAF43D;
+color legendary=#FAF43E;
 color currentColor=common;
 void setup(){
   fail = new SoundFile(this, "FAILURE.wav");
@@ -313,7 +313,7 @@ void keyPressed() {
     sKey=true;
   }
 }
-void keyReleased(){
+void keyReleased(){  
   if (key=='a') {
     aKey=false;
   }
