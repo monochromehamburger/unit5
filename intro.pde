@@ -6,6 +6,8 @@ void intro(){
   textSize(100);
   textAlign(CENTER);
   text("BREAK OUT", width/2, height/2-200);
+  text("P to Pause", width/2, height/2+400);
+  text("Click to Start", width/2, height/2+300);
   for(int i=0;i<5;i++){
     fill(23, 229, 203);  
     square(width/2+i*200-450, height/2-50, 100);
