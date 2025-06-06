@@ -1,34 +1,19 @@
-
 void game(){
-  background(93,13,89);
-  fill(0);
-  textSize(250);
-  textAlign(CENTER);
-  //bricks
-  text("BREAK OUT", width/2, height/2-200);
-  circle(paddleX, paddleY, paddleD);
-  fill(200, 60, 60);
-  circle(ballx, bally, balld);
-  for(int i=0;i<n;i++){
-    if(alive[i]==true){
-      //thank you calvin for the gradient
-      fill(86, brickColor[i], 173);
-      circle(x[i], y[i], brickd);
-    }
+  if(random(0,30)<1){
+    enemies.add(new enemy());
   }
-  int i=0;
-  while(i<n){
-    if(alive[i]==true){
-      if(dist(ballx, bally, x[i], y[i])<balld/2+brickd/2){
-        vx=(ballx-x[i])/5;
-        vy=(bally-y[i])/5;
-        alive[i]=false;
-        bricksLeft--;
+  ship.show();
+  if(aKey) ship.move(-10, 0);
+  if(dKey) ship.move(10, 0);
+  if(wKey) ship.move(0, -10);
+  if(sKey) ship.move(0, 10);
+  for(int i=0;i<enemies.size();i++){
+    if(enemies.get(i).alive==true){
+      enemies.get(i).move(0,5);
+      enemies.get(i).show();
+      if(enemies.get(i).y>height+100){
+        enemies.get(i).alive=false;
       }
     }
-    i++;
   }
-  textSize(50);
-  fill(255);
-  text("Level 1: Completely Normal", 400, height-100);
- }
+}
