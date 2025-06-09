@@ -6,6 +6,14 @@ boolean wKey=false;
 boolean sKey=false;
 player ship=new player();
 ArrayList<enemy> enemies=new ArrayList<>();
+ArrayList<spinningEnemy> spinningEnemies=new ArrayList<>();
+int straightEnemyX=0;
+int straightEnemyTimer=30;
+int spinningEnemyAngle=0;
+int spinningEnemyTimer=75;
+boolean spinningRight=true;
+boolean goingRight=true;
+boolean click=true;
 void setup(){
   size(2000, 1500, P2D);
   ship=new player();
@@ -14,6 +22,9 @@ void draw(){
   background(0, 0, 0);
   if(mode==0){
     intro();
+  }
+  else if(mode==-1){
+    lose();
   }
   else{
     game();
@@ -48,5 +59,10 @@ void keyReleased(){
   }
 }
 void mouseClicked(){
-  mode=1;
+  if(click==true){
+    enemies=new ArrayList<enemy>();
+    mode=1;
+    ship=new player(); 
+    spinningEnemies=new ArrayList<spinningEnemy>();
+  }
 }

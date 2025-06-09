@@ -1,4 +1,4 @@
-void intro(){
+  void intro(){
   background(0, 0, 0);
   textSize(100);
   textAlign(CENTER);
